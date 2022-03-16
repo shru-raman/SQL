@@ -1,0 +1,22 @@
+-- create
+CREATE TABLE EMPLOYEE (
+  ID INTEGER PRIMARY KEY,
+  NAME TEXT NOT NULL,
+  SALARY INTEGER
+);
+
+-- insert
+INSERT INTO EMPLOYEE VALUES (0001, 'Candiceana', 4685);
+INSERT INTO EMPLOYEE VALUES (0002, 'Juliana', 2253);
+INSERT INTO EMPLOYEE VALUES (0003, 'Scarlet', 2253);
+INSERT INTO EMPLOYEE VALUES (0004, 'Ileana', 1151);
+
+-- fetch 
+//sort by last 3 char of name. if same, sort by decreasing salary, if same, sort by ascending id
+SELECT Name, Salary FROM EMPLOYEE WHERE Salary > 500
+order by SUBSTRING(name,-3), salary desc, id asc;
+
+//SUBSTRING(name,-3) extracts last 3 character of string
+SUBSTRING(name,3) extracts the string from 3rd char till end
+//The starting position. If it is a positive number, this function extracts from the beginning of the string. 
+//If it is a negative number, this function extracts from the end of the string.

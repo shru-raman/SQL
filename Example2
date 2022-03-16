@@ -1,0 +1,99 @@
+
+-- create
+CREATE TABLE EMPLOYEE (
+  ID INTEGER PRIMARY KEY,
+  NAME TEXT NOT NULL,
+  SALARY INTEGER,
+  ADDRESS TEXT NOT NULL,
+  DOB DATE,
+  GENDER ENUM('F','M'),
+  DEPT TEXT
+);
+
+-- insert
+INSERT INTO EMPLOYEE VALUES (0001, 'Candiceana', 4685,'Hyderbad(HYD)','2011-12-1','F','HR');
+INSERT INTO EMPLOYEE VALUES (0002, 'Juliana', 2253, 'Chennai(CHN)','2011-10-1','F','HR');
+INSERT INTO EMPLOYEE VALUES (0003, 'Scarlet', 2253,'TN','2011-11-1','M','ADMIN');
+INSERT INTO EMPLOYEE VALUES (0004, 'Ileana', 1151,'DEL','2011-1-1','F','CS');
+INSERT INTO EMPLOYEE VALUES (0005, 'Scarlet', 2253,'TNY','2011-11-1','M','CS');
+INSERT INTO EMPLOYEE VALUES (0006, 'Liana', 2253,'TNY','2011-11-1','M','HR');
+
+
+
+-- fetch 
+SELECT Name, Salary FROM EMPLOYEE WHERE Salary > 500
+order by SUBSTRING(name,-3), salary desc, id asc;
+
+select UPPER(name) as aliasname from EMPLOYEE;
+
+select LOWER(name) as aliasname from EMPLOYEE;
+
+Select Sysdate();
+
+select SUBSTRING(NAME, 1, 4) from EMPLOYEE;
+
+select LOCATE(')',ADDRESS) from EMPLOYEE;
+
+select SUBSTRING(ADDRESS,1,LOCATE('(',ADDRESS)-1) from EMPLOYEE;
+
+select SUBSTRING(ADDRESS,LOCATE('(',ADDRESS)) from EMPLOYEE;
+
+select Name from EMPLOYEE where name like 's%';
+
+select Name from EMPLOYEE where LENGTH(name)<10
+ORDER BY NAME
+LIMIT 1;
+
+select concat(Name,' ', Address) as full_details from EMPLOYEE;
+
+select count(*), GENDER from EMPLOYEE 
+where DOB between '2011-09-1' and '2011-12-01'
+group by GENDER;
+
+select name, address from EMPLOYEE
+order by name, address desc;
+
+select * from EMPLOYEE
+where SUBSTRING(name, -1) ='A'
+and LENGTH(NAME) > 5;
+
+select * from EMPLOYEE
+where NAME LIKE '%A';
+
+-- fetch name whose last char is A and name contains 5 alphabets
+select * from EMPLOYEE
+where NAME LIKE '____A';
+
+select * from EMPLOYEE
+where NAME not in ('Juliana','Liana');
+
+-- fetch dept-wise count of employees with count in asc order
+select dept, count(*) as dept_count
+from EMPLOYEE
+group by dept
+order by dept_count;
+
+select * from EMPLOYEE
+where id%2=0;
+
+-- WINDOW FUNCTION
+select ROW_NUMBER() over (PARTITION BY GENDER) as rowno, GENDER from EMPLOYEE;
+
+-- Min 2 and Max 2 salary
+SELECT SALARY from EMPLOYEE ORDER BY SALARY LIMIT 2;
+SELECT SALARY from EMPLOYEE ORDER BY SALARY DESC LIMIT 2;
+
+-- Get 3rd highest salry , ie. nth highest salary
+SELECT SALARY from EMPLOYEE ORDER BY SALARY DESC LIMIT 3,1;
+
+-- retrive records with duplicate names
+select name from EMPLOYEE
+group by name
+having count(*) > 1;
+
+-- get dept that has less than 2 employees
+select dept, count(*)
+from EMPLOYEE
+group by dept
+having count(*)<2;
+
